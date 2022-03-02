@@ -1,6 +1,5 @@
 <template>
   <div class="login_container">
-    <!-- description of login page -->
     <div class="login_des">
       <h1>DriveThru</h1>
       <h2>A smart traffic solution for schools</h2>
@@ -13,24 +12,16 @@
         <img src="../assets/images/avatar.png" alt="" />
       </div>
       <!-- form -->
-      <el-form :model="loginForm" label-width="0px" class="login_form">
+      <el-form :model="loginForm" class="login_form">
         <!-- username -->
         <el-form-item>
           <span>Username</span>
-          <el-input
-            :v-model="loginForm.username"
-            placeholder="Username"
-            value="123"
-          ></el-input>
+          <el-input v-model="loginForm.username" placeholder="Username"></el-input>
         </el-form-item>
         <!-- password -->
         <el-form-item>
           <span>Password</span>
-          <el-input
-            :v-model="loginForm.password"
-            type="password"
-            placeholder="password"
-          ></el-input>
+          <el-input v-model="loginForm.password" type="password" placeholder="password"></el-input>
         </el-form-item>
         <!-- button -->
         <div class="buttons">
@@ -69,7 +60,9 @@ export default {
     }
   },
   methods: {
-    toLogin () {},
+    toLogin () {
+      this.$router.push('/home')
+    },
     toRegister () {
       this.$router.push('/register')
     }
@@ -108,7 +101,7 @@ export default {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
-    > img {
+    img {
       width: 100%;
       height: 100%;
       border-radius: 50%;
@@ -122,7 +115,6 @@ export default {
     width: 100%;
     padding: 0px 20px;
     box-sizing: border-box;
-    z-index: 10;
   }
 }
 
