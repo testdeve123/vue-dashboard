@@ -137,6 +137,10 @@ export default {
   },
   created () {
     this.getAllData()
+
+    const currentIndex = '/studentlist'
+    this.$emit('getIndex', currentIndex)
+    localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
   },
   methods: {
     async getAllData () {
@@ -221,9 +225,13 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  .search_table {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
-.edit_column{
+.edit_column {
   display: flex;
   justify-content: space-between;
 }

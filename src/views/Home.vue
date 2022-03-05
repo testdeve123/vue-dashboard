@@ -11,16 +11,21 @@
           :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
+          :router="true"
           @select="handleSelect"
         >
-          <el-menu-item index="1">Dashboard</el-menu-item>
-          <el-menu-item index="2">Data Recordes</el-menu-item>
-          <el-sub-menu index="3">
+          <el-menu-item index="/dashboard">Dashboard</el-menu-item>
+          <el-menu-item index="/datarecords">Data Recordes</el-menu-item>
+          <el-sub-menu index="/studentmanagement">
             <template #title>Student Management</template>
-            <el-menu-item index="3-1">View Infomation Table</el-menu-item>
-            <el-menu-item index="3-2">Add Student Infomation</el-menu-item>
+            <el-menu-item index="/studentlist"
+              >View Infomation Table</el-menu-item
+            >
+            <el-menu-item index="/addstudent"
+              >Add Student Infomation</el-menu-item
+            >
           </el-sub-menu>
-          <el-menu-item index="4">Settings</el-menu-item>
+          <el-menu-item index="/settings">Settings</el-menu-item>
         </el-menu>
       </div>
       <el-button type="info" @click="logout">Log Out</el-button>
@@ -30,7 +35,10 @@
       <!-- aside <el-aside width="200px">Aside</el-aside>-->
       <el-container>
         <!-- conent -->
-        <el-main>Main</el-main>
+        <el-main>
+          <!-- router placeholder -->
+          <router-view @getIndex="getIndex" ></router-view
+        ></el-main>
       </el-container>
     </el-container>
   </el-container>
@@ -40,13 +48,26 @@
 export default {
   data () {
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
+      activeIndex: '/dashboard',
+      key: ''
     }
+  },
+  created () {
+    // 在页面加载时读取localStorage里的状态信息
+    const getActiveIndex = JSON.parse(localStorage.getItem('activeIndex'))
+    if (getActiveIndex !== '') {
+      this.activeIndex = getActiveIndex
+      console.log(this.activeIndex)
+    }
+    // 在页面刷新时将vuex里的信息保存到localStorage里
   },
   methods: {
     handleSelect (key, keyPath) {
+      this.key = key
       console.log(key, keyPath)
+    },
+    getIndex (value) {
+      this.activeIndex = value
     }
   }
 }

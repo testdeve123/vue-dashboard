@@ -1,9 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
-import DataAnalysis from '../views/DataAnalysis.vue'
+import Dashboard from '../views/Dashboard.vue'
+import DataRecords from '../views/DataRecords.vue'
 import StudentList from '../views/StudentList.vue'
 import AddStudent from '../views/AddStudent.vue'
+import Settings from '../views/Settings.vue'
 
 const routes = [
   {
@@ -18,17 +20,14 @@ const routes = [
   {
     path: '/home',
     name: 'Home',
-    component: Home
-  },
-  {
-    path: '/analysis',
-    name: 'DataAnalysis',
-    component: DataAnalysis
-  },
-  {
-    path: '/studentlist',
-    name: 'StudentList',
-    component: StudentList
+    component: Home,
+    redirect: '/dashboard',
+    children: [
+      { path: '/dashboard', component: Dashboard },
+      { path: '/datarecords', component: DataRecords },
+      { path: '/studentlist', component: StudentList },
+      { path: '/settings', component: Settings }
+    ]
   },
   {
     path: '/addstudent',

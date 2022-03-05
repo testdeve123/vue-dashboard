@@ -1,7 +1,7 @@
 <template>
   <div class="table_container">
     <el-button type="text" @click="dialogVisible = true"
-      >点击打开 Dialog</el-button
+      >点击打开Settings Dialog</el-button
     >
 
     <el-dialog title="提示" v-model="dialogVisible" width="30%">
@@ -24,9 +24,13 @@ export default {
     return {
       dialogVisible: false
     }
+  },
+  created () {
+    const currentIndex = '/settings'
+    this.$emit('getIndex', currentIndex)
+    localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
   }
 }
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

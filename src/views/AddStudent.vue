@@ -80,6 +80,11 @@ export default {
       }
     }
   },
+  created () {
+    const currentIndex = '/studentlist'
+    this.$emit('getIndex', currentIndex)
+    localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
+  },
   methods: {
     goBacktoSL () {
       this.$router.push('/studentlist')
