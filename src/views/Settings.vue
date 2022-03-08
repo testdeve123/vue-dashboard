@@ -1,20 +1,32 @@
 <template>
   <div class="table_container">
-    <el-button type="text" @click="dialogVisible = true"
-      >点击打开Settings Dialog</el-button
-    >
-
-    <el-dialog title="提示" v-model="dialogVisible" width="30%">
-      <span>需要注意的是内容是默认不居中的</span>
-      <template v-slot:footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false"
-            >确 定</el-button
+    <div class="percentage_chart_date">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="">
+          <el-input v-model="formInline.user" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-select v-model="formInline.region" placeholder="">
+            <el-option label="" value="shanghai"></el-option>
+            <el-option label="" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
+      <template>
+        <el-select v-model="value" placeholder="">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
           >
-        </span>
+          </el-option>
+        </el-select>
       </template>
-    </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -22,6 +34,20 @@
 export default {
   data () {
     return {
+      formInline: {
+        user: '',
+        region: ''
+      },
+      options: [
+        {
+          value: '1',
+          label: 'Today'
+        },
+        {
+          value: '2',
+          label: 'Yesterday'
+        }
+      ],
       dialogVisible: false
     }
   },
@@ -29,8 +55,17 @@ export default {
     const currentIndex = '/settings'
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
+  },
+  methods: {
+    onSubmit () {
+      console.log('submit!')
+    }
   }
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.percentage_chart_date {
+  background-color: aqua;
+}
+</style>

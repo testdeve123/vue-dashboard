@@ -28,7 +28,7 @@
       <el-button type="primary" @click="toAdd()">Add Information</el-button>
     </div>
     <div class="table_area">
-      <el-table :data="tableData" border style="width: 100%" max-height="600">
+      <el-table :data="tableData" border style="width: 100%" max-height="700">
         <el-table-column
           fixed
           prop="id"
@@ -136,11 +136,11 @@ export default {
     }
   },
   created () {
-    this.getAllData()
-
     const currentIndex = '/studentlist'
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
+
+    this.getAllData()
   },
   methods: {
     async getAllData () {
