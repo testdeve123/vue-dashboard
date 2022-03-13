@@ -28,38 +28,54 @@
       <el-button type="primary" @click="toAdd()">Add Information</el-button>
     </div>
     <div class="table_area">
-      <el-table :data="tableData" border style="width: 100%" max-height="700">
+      <el-table v-loading="loading" :data="tableData" border style="width: 100%" max-height="700">
         <el-table-column
           fixed
           prop="id"
           label="Student ID"
           width="100"
         ></el-table-column>
-        <el-table-column prop="stu_name" label="Student's Name" width="200">
+        <el-table-column prop="stu_name" label="Student's Name" width="300">
         </el-table-column>
         <el-table-column prop="class" label="Student's Class" width="150">
         </el-table-column>
-        <el-table-column prop="" label="" width="150"></el-table-column>
+        <el-table-column
+          prop="gender"
+          label="Student's Gender"
+          width="150"
+        ></el-table-column>
         <el-table-column
           prop="carplate_num"
           label="CarPlate Number"
-          width="150"
+          width="200"
         >
         </el-table-column>
-        <el-table-column fixed="right" label="" width="180" class="edit_column">
+        <el-table-column label="" width="200" class="edit_column">
           <template #default="scope">
             <el-button
               size="default"
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="
+                ;(dialogFormVisible = true), handleEdit(scope.$index, scope.row)
+              "
               >Edit</el-button
             >
-            <el-dialog title="收货地址" v-model:visible="dialogFormVisible">
-              <el-form :model="form">
+            <el-dialog
+              title="收货地址"
+              v-model="dialogFormVisible"
+              append-to-body
+            >
+              <el-form :model="editForm">
                 <el-form-item label="活动名称" :label-width="formLabelWidth">
-                  <el-input v-model="form.name" autocomplete="off"></el-input>
+                  <el-input
+                    v-model="editForm.name"
+                    autocomplete="off"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item label="活动区域" :label-width="formLabelWidth">
-                  <el-select v-model="form.region" placeholder="请选择活动区域">
+                  <el-select
+                    v-model="editForm.gender"
+                    placeholder="请选择活动区域"
+                  >
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                   </el-select>
@@ -115,13 +131,16 @@ export default {
   inject: ['reload'],
   data () {
     return {
+      loading: true,
       tableData: [],
-      editTable: [
+      editForm: [
         {
           id: '',
           stu_name: '',
-          class: ' ',
-          carplate_num: ' '
+          gender: '',
+          year: '',
+          group: '',
+          carplate_num: ''
         }
       ],
       formInline: {
@@ -132,7 +151,9 @@ export default {
       one: {}, // for timer, auto reload
       indexNum: 0,
       rowNum: 0,
-      dialogVisible: false
+      formLabelWidth: '120px',
+      dialogFormVisible: false, // for edit button
+      dialogVisible: false // for delete button
     }
   },
   created () {
@@ -146,17 +167,27 @@ export default {
     async getAllData () {
       const { data: res } = await this.$api.post('getCarPlate', this.empty)
       console.log(res.list)
+      var gender = ''
       for (var i = 0; i < res.list.length; i++) {
+        if (res.list[i].isMale === '0') {
+          gender = 'Female'
+        } else {
+          gender = 'Male'
+        }
         const insertItem = {
-          id: res.list[i].indexNum,
+          id: res.list[i].studentId,
           stu_name: res.list[i].studentName,
-          class: res.list[i].studentClass,
-          carplate_num: res.list[i].carplateNum
+          year: res.list[i].studyYear,
+          group: res.list[i].studyGroup,
+          class: res.list[i].studyYear + res.list[i].studyGroup,
+          gender: gender,
+          carplate_num: res.list[i].carPlateNum
         }
 
         this.tableData.push(insertItem)
         console.log(insertItem)
       }
+      this.loading = false
     },
     // timer
     timer () {
@@ -182,10 +213,11 @@ export default {
     },
     // edit
     handleEdit (index, row) {
-      this.editTable.id = row.id
-      this.editTable.stu_name = row.stu_name
-      this.editTable.class = row.class
-      this.editTable.carplate_num = row.carplateNum
+      this.editForm.id = row.id
+      this.editForm.stu_name = row.stu_name
+      this.editForm.class = row.class
+      this.editForm.gender = row.gender
+      this.editForm.carplate_num = row.carplateNum
     },
     async confirmEdit () {
       const editItem = {
@@ -197,16 +229,14 @@ export default {
       this.$router.go(0)
     },
     // delete
-    closeHandleDelete (index, row) {
-      console.log(index, row)
-    },
     handleDelete (index, row) {
       this.indexNum = index
       this.rowNum = row
+      console.log(index, row)
     },
     async confirmDelete () {
       const deleteItme = {
-        indexNum: this.rowNum.id
+        studentId: this.rowNum.id
       }
       const result = await this.$api.post('deleteCarPlate', deleteItme)
       console.log(result)
@@ -220,6 +250,7 @@ export default {
 
 <style lang="less" scoped>
 .table_container {
+  width: 1200px;
   height: 80%;
   position: absolute;
   left: 50%;
@@ -233,6 +264,7 @@ export default {
 
 .edit_column {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
 </style>

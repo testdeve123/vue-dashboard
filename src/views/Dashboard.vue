@@ -4,27 +4,13 @@
       <div class="statistics_container">
         <div class="statistics_palceholder"></div>
         <div class="statistics" id=""></div>
-        <div class="statistics_banner">were detected on</div>
+        <div class="statistics_banner"><span>were detected on</span></div>
         <div class="statistics_date">{{ weekday }}{{}}</div>
       </div>
-      <div class="percentage_chart_container">
-        <div class="percentage_chart" id="percentage"></div>
-        <div class="percentage_chart_date">
-          <template>
-            <el-select v-model="value" placeholder="">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </template>
-        </div>
+      <div class="classAna_container">
+        <div class="classAna_chart" id="classAna"></div>
       </div>
     </div>
-
     <div class="numofCar_chart_container">
       <div class="numofCar_chart" id="numofCar"></div>
     </div>
@@ -86,7 +72,7 @@ export default {
   },
   mounted () {
     this.cleanEChartsCache()
-    this.percentageChart()
+    this.classAnaChart()
     this.numofCarChart()
   },
   methods: {
@@ -101,60 +87,16 @@ export default {
     cleanEChartsCache () {
       // The dom element of echarts has an attribute: _echarts_instance_, same as id,
       // needs to be regenerated every refresh
-      document
-        .getElementById('percentage')
-        .removeAttribute('_echarts_instance_')
+      document.getElementById('classAna').removeAttribute('_echarts_instance_')
       document.getElementById('numofCar').removeAttribute('_echarts_instance_')
     },
-    percentageChart () {
+    classAnaChart () {
       var myChart = this.$echarts.getInstanceByDom(
-        document.getElementById('percentage')
+        document.getElementById('classAna')
       )
       if (myChart == null) {
-        myChart = this.$echarts.init(document.getElementById('percentage'))
+        myChart = this.$echarts.init(document.getElementById('numofCar'))
       }
-      var option = {
-        title: {
-          text: 'Proportion of all registered vehicles on:',
-          left: 'left'
-        },
-        tooltip: {
-          trigger: 'item'
-        },
-        legend: {
-          orient: 'vertical',
-          left: '45%',
-          top: '25%'
-        },
-        series: [
-          {
-            name: 'Percentage of Car',
-            type: 'pie',
-            radius: '45%',
-            center: ['30%', '60%'],
-            label: {
-              show: false,
-              position: 'center'
-            },
-            labelLine: {
-              show: false
-            },
-            data: [
-              { value: 70, name: '70% Detected' },
-              { value: 30, name: '30% Not Detected' }
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
-      }
-
-      myChart.setOption(option)
     },
     numofCarChart () {
       var lineChartForm = this.lineChartForm
@@ -224,6 +166,7 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
 .chart_container_upper {
   width: 80%;
   height: 400px;
@@ -234,6 +177,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 .statistics_container {
   width: 40%;
   height: 350px;
@@ -254,24 +198,24 @@ export default {
     padding-top: 50px;
     padding-bottom: 50px;
     padding-left: 55%;
-    font-size: 16px;
+    .span {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
 }
 
-.percentage_chart_container {
+.classAna_container {
   width: 59%;
   height: 350px;
   background-color: aliceblue;
-  .percentage_chart {
+  .classAna_chart {
     width: 60%;
     height: 90%;
     position: relative;
     top: 50%;
     left: 35%;
     transform: translate(-50%, -50%);
-  }
-  .percentage_chart_date {
-    background-color: aqua;
   }
 }
 

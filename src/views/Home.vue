@@ -15,20 +15,25 @@
           @select="handleSelect"
         >
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
-          <el-menu-item index="/datarecords">Data Recordes</el-menu-item>
-          <el-sub-menu index="/studentmanagement">
-            <template #title>Student Management</template>
-            <el-menu-item index="/studentlist"
-              >View Infomation Table</el-menu-item
-            >
-            <el-menu-item index="/addstudent"
-              >Add Student Infomation</el-menu-item
-            >
-          </el-sub-menu>
+          <el-menu-item index="/datahistory">Data Recordes</el-menu-item>
+          <el-menu-item index="/studentlist">Student Management</el-menu-item>
+          <el-menu-item index="/systemanalysis">System Analysis</el-menu-item>
           <el-menu-item index="/settings">Settings</el-menu-item>
         </el-menu>
       </div>
-      <el-button type="info" @click="logout">Log Out</el-button>
+      <el-dropdown>
+        <el-avatar :size="50" :src="circleUrl"></el-avatar>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="dropdown_event_1"
+              >Settings</el-dropdown-item
+            >
+            <el-dropdown-item divided @click="dropdown_event_2"
+              >Log Out</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </el-header>
     <!-- main -->
     <el-container>
@@ -37,7 +42,7 @@
         <!-- conent -->
         <el-main>
           <!-- router placeholder -->
-          <router-view @getIndex="getIndex" ></router-view
+          <router-view @getIndex="getIndex"></router-view
         ></el-main>
       </el-container>
     </el-container>
@@ -49,7 +54,8 @@ export default {
   data () {
     return {
       activeIndex: '/dashboard',
-      key: ''
+      key: '',
+      circleUrl: ''
     }
   },
   created () {
@@ -68,7 +74,11 @@ export default {
     },
     getIndex (value) {
       this.activeIndex = value
-    }
+    },
+    dropdown_event_1 () {
+      this.$router.push('/settings')
+    },
+    dropdown_event_2 () {}
   }
 }
 </script>
