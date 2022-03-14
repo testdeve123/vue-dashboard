@@ -1,12 +1,6 @@
 <template>
   <div class="chart_container">
     <div class="chart_container_upper">
-      <div class="statistics_container">
-        <div class="statistics_palceholder"></div>
-        <div class="statistics" id=""></div>
-        <div class="statistics_banner"><span>were detected on</span></div>
-        <div class="statistics_date">{{ weekday }}{{}}</div>
-      </div>
       <div class="classAna_container">
         <div class="classAna_chart" id="classAna"></div>
       </div>
@@ -178,35 +172,8 @@ export default {
   justify-content: space-between;
 }
 
-.statistics_container {
-  width: 40%;
-  height: 350px;
-  background-color: aliceblue;
-  .statistics_palceholder {
-    padding-top: 60px;
-  }
-  .statistics {
-    width: 200px;
-    height: 100px;
-    background-color: lightsteelblue;
-
-    margin: 0 auto;
-    border-radius: 4px;
-  }
-  .statistics_banner {
-    text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-left: 55%;
-    .span {
-      font-size: 16px;
-      line-height: 20px;
-    }
-  }
-}
-
 .classAna_container {
-  width: 59%;
+  width: 100%;
   height: 350px;
   background-color: aliceblue;
   .classAna_chart {
