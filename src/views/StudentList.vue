@@ -28,7 +28,13 @@
       <el-button type="primary" @click="toAdd()">Add Information</el-button>
     </div>
     <div class="table_area">
-      <el-table v-loading="loading" :data="tableData" border style="width: 100%" max-height="700">
+      <el-table
+        v-loading="loading"
+        :data="tableData"
+        border
+        style="width: 100%"
+        max-height="700"
+      >
         <el-table-column
           fixed
           prop="id"
@@ -60,9 +66,9 @@
               >Edit</el-button
             >
             <el-dialog
-              title="收货地址"
+              title="Edit Information"
               v-model="dialogFormVisible"
-              append-to-body
+              :append-to-body="true"
             >
               <el-form :model="editForm">
                 <el-form-item label="活动名称" :label-width="formLabelWidth">
@@ -105,7 +111,7 @@
               title="Notice"
               v-model="dialogVisible"
               width="30%"
-              append-to-body
+              :append-to-body="true"
             >
               <span>Are you sure to delete?</span>
               <template v-slot:footer>

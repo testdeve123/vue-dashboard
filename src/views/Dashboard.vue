@@ -1,8 +1,19 @@
 <template>
   <div class="chart_container">
-    <div class="chart_container_upper">
-      <div class="classAna_container">
-        <div class="classAna_chart" id="classAna"></div>
+    <div class="classAna_container">
+      <div class="classAna_chart" id="classAna"></div>
+      <div class="date_select_container">
+        <span class="date_select"></span>
+        <el-date-picker
+          v-model="dateValue"
+          type="date"
+          placeholder="Date Select"
+          value-format="YYYY-MM-DD"
+          :disabled-date="disabledDate"
+          :shortcuts="shortcuts"
+          @change="(value) => dateChangeHandler(value)"
+        >
+        </el-date-picker>
       </div>
     </div>
     <div class="numofCar_chart_container">
@@ -16,17 +27,41 @@ export default {
   name: 'index',
   data () {
     return {
-      options: [
+      numberInfoForm: [
+        { date: '2022-03-15', number: [10, 20, 30, 50, 10, 5] },
+        { date: '2022-03-14', number: [15, 25, 30, 10, 5, 5] },
+        { date: '2022-03-13', number: [30, 20, 10, 40, 10, 5] },
+        { date: '2022-03-12', number: [20, 20, 30, 50, 5, 5] },
+        { date: '2022-03-11', number: [50, 5, 30, 10, 10, 5] },
+        { date: '2022-03-10', number: [5, 15, 10, 10, 0, 50] },
+        { date: '2022-03-09', number: [35, 5, 10, 5, 20, 5] },
+        { date: '2022-03-08', number: [25, 15, 5, 20, 10, 5] }
+      ],
+      barChartValue: [],
+      year: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6'],
+      dateValue: '',
+      disabledDate (time) {
+        return time.getTime() > Date.now()
+      },
+      shortcuts: [
         {
-          value: '1',
-          label: 'Today'
+          text: 'Yesterday',
+          value: () => {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            return date
+          }
         },
         {
-          value: '2',
-          label: 'Yesterday'
+          text: 'A week ago',
+          value: () => {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            return date
+          }
         }
       ],
-      value: '1',
+      //
       carInfoForm: {
         numofCarAft: [10, 20, 30, 50, 60, 10, 5],
         numofCarEve: [5, 10, 40, 20, 50, 0, 5],
@@ -62,6 +97,8 @@ export default {
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
 
+    this.getDate()
+    this.getDataByDate()
     this.getdata()
   },
   mounted () {
@@ -70,6 +107,21 @@ export default {
     this.numofCarChart()
   },
   methods: {
+    getDate () {
+      // get current date in YYYY-MM-DD format
+      var data = new Date()
+      var month =
+        data.getMonth() < 9 ? '0' + (data.getMonth() + 1) : data.getMonth() + 1
+      var date = data.getDate() <= 9 ? '0' + data.getDate() : data.getDate()
+      this.dateValue = data.getFullYear() + '-' + month + '-' + date
+    },
+    getDataByDate () {
+      for (var i in this.numberInfoForm) {
+        if (this.numberInfoForm[i].date === this.dateValue) {
+          this.barChartValue = this.numberInfoForm[i].number
+        }
+      }
+    },
     getdata () {
       for (let i = 0; i < 7; i++) {
         this.lineChartForm.date[i] =
@@ -89,9 +141,39 @@ export default {
         document.getElementById('classAna')
       )
       if (myChart == null) {
-        myChart = this.$echarts.init(document.getElementById('numofCar'))
+        myChart = this.$echarts.init(document.getElementById('classAna'))
       }
+
+      var option = {
+        title: {
+          text: "Number of Vehicle of each year's student on",
+          left: 'right'
+        },
+        xAxis: {
+          type: 'category',
+          data: this.year
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: this.barChartValue,
+            type: 'bar'
+          }
+        ]
+      }
+
+      myChart.setOption(option)
     },
+    // get date from date picker
+    dateChangeHandler (value) {
+      console.log(value)
+      this.dateValue = value
+      this.getDataByDate()
+      this.classAnaChart()
+    },
+    //
     numofCarChart () {
       var lineChartForm = this.lineChartForm
       // console.log(lineChartForm.date)
@@ -161,38 +243,34 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.chart_container_upper {
+.classAna_container {
   width: 80%;
-  height: 400px;
+  height: 350px;
+  background-color: aliceblue;
   position: relative;
   left: 50%;
-  top: 30%;
+  top: 25%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: space-between;
-}
-
-.classAna_container {
-  width: 100%;
-  height: 350px;
-  background-color: aliceblue;
   .classAna_chart {
-    width: 60%;
+    width: 85%;
     height: 90%;
-    position: relative;
-    top: 50%;
-    left: 35%;
-    transform: translate(-50%, -50%);
+    padding: 4% 4%;
+  }
+  .date_select_container {
+    padding-top: 4%;
+    padding-right: 4%;
   }
 }
 
 .numofCar_chart_container {
   width: 80%;
-  height: 400px;
+  height: 350px;
   background-color: aliceblue;
   position: relative;
   left: 50%;
-  top: 25%;
+  top: 30%;
   transform: translate(-50%, -50%);
   .numofCar_chart {
     width: 90%;

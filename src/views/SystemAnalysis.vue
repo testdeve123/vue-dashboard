@@ -3,9 +3,9 @@
     <div class="chart_container_upper">
       <div class="statistics_container">
         <div class="statistics_palceholder"></div>
-        <div class="statistics" id=""></div>
+        <div class="statistics" id="">{{ numOfDetected }}</div>
         <div class="statistics_banner"><span>were detected on</span></div>
-        <div class="statistics_date">{{ weekday }}{{}}</div>
+        <div class="statistics_date">{{ dateOfDetected }}{{}}</div>
       </div>
       <div class="percentage_chart_container">
         <div class="percentage_chart" id="percentage"></div>
@@ -30,7 +30,10 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      numOfDetected: '100',
+      dateOfDetected: '2022-2-24'
+    }
   },
   created () {
     const currentIndex = '/systemanalysis'
@@ -56,7 +59,7 @@ export default {
       }
       var option = {
         title: {
-          text: 'Proportion of all registered vehicles on:',
+          text: 'Proportion of all registered vehicles:',
           left: 'left'
         },
         tooltip: {

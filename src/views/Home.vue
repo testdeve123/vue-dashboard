@@ -15,7 +15,7 @@
           @select="handleSelect"
         >
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
-          <el-menu-item index="/datahistory">Data Recordes</el-menu-item>
+          <el-menu-item index="/datahistory">Data History</el-menu-item>
           <el-menu-item index="/studentlist">Student Management</el-menu-item>
           <el-menu-item index="/systemanalysis">System Analysis</el-menu-item>
           <el-menu-item index="/settings">Settings</el-menu-item>
@@ -78,7 +78,9 @@ export default {
     dropdown_event_1 () {
       this.$router.push('/settings')
     },
-    dropdown_event_2 () {}
+    dropdown_event_2 () {
+      this.$router.push('/intropage')
+    }
   }
 }
 </script>
@@ -118,6 +120,6 @@ export default {
 }
 
 .el-main {
-  background-color: antiquewhite;
+  background-color: azure;
 }
 </style>

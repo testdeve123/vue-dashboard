@@ -6,7 +6,15 @@
         <img src="../assets/images/logo.png" alt="" />
         <span>DriveThru System</span>
       </div>
-      <el-button type="" @click="login">Log In</el-button>
+      <div>
+        <el-button type="primary" @click="loginButton"
+          ><el-icon style="font-size: 20px">
+            <user-filled
+              style="width: 2em; height: 2em; margin-right: 8px"
+            /> </el-icon
+          >Log In</el-button
+        >
+      </div>
     </el-header>
     <el-container>
       <el-main>
@@ -15,7 +23,7 @@
             <el-carousel
               indicator-position="outside"
               height="350px"
-              interval="5000"
+              :interval="5000"
             >
               <el-carousel-item v-for="item in carouselList" :key="item">
                 <el-image :src="item.imgUrl" class="carousel_image">
@@ -29,7 +37,14 @@
               </el-carousel-item>
             </el-carousel>
           </div>
-          <div class="intro_container"><h1>Introduction</h1></div>
+          <div class="intro_container">
+            <h1>Introduction</h1>
+            <br />
+            <h2>{{ intro_h2 }}</h2>
+            <br />
+            <h3>{{ intro_h3 }}</h3>
+          </div>
+          <div class="content_container">content</div>
         </div>
       </el-main>
     </el-container>
@@ -37,7 +52,14 @@
 </template>
 
 <script>
+import { UserFilled } from '@element-plus/icons'
+
 export default {
+  components: {
+    // 全名
+    [UserFilled.name]: UserFilled
+    // 或者以缩写的方式
+  },
   data () {
     return {
       carouselList: [
@@ -59,10 +81,16 @@ export default {
           imgUrl:
             'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg'
         }
-      ]
+      ],
+      intro_h2: 'A smart traffic solution for schools',
+      intro_h3: 'DriveThru is a Smart drive through system using IoT'
     }
   },
-  methods: {}
+  methods: {
+    loginButton () {
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 
@@ -93,7 +121,7 @@ export default {
 }
 
 .el-main {
-  background-color: antiquewhite;
+  background-color: azure;
 }
 
 .page_container {
@@ -139,8 +167,8 @@ export default {
 }
 
 .intro_container {
-  width: 1500px;
-  height: 100%;
+  width: 100%;
+  height: 400px;
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -151,5 +179,24 @@ export default {
     align-items: center;
     justify-content: center;
   }
+  > h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  > h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.content_container {
+  width: 90%;
+  height: 400px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: #d3dce6;
 }
 </style>
