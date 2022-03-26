@@ -257,7 +257,7 @@ export default {
 <style lang="less" scoped>
 .table_container {
   width: 1200px;
-  height: 80%;
+  height: 90%;
   position: absolute;
   left: 50%;
   top: 50%;

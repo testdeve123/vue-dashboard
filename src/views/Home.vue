@@ -89,6 +89,8 @@ export default {
 .home_container {
   width: 100%;
   height: 100%;
+  position: fixed;
+  display: flex;
 }
 .el-header {
   height: 8%;
@@ -120,6 +122,10 @@ export default {
 }
 
 .el-main {
+  width: 100%;
+  height: 100%;
   background-color: azure;
+  position: fixed;
+  display: flex;
 }
 </style>

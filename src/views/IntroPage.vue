@@ -33,18 +33,23 @@
                     </div>
                   </template>
                 </el-image>
-                <h3>{{ item.words }}</h3>
+                <div class="carousel_words">
+                  <h2>{{ item.words_1 }}</h2>
+                  <h4>{{ item.words_2 }}</h4>
+                </div>
               </el-carousel-item>
             </el-carousel>
           </div>
           <div class="intro_container">
             <h1>Introduction</h1>
-            <br />
             <h2>{{ intro_h2 }}</h2>
+            <p>{{ intro_p_1 }}</p>
             <br />
             <h3>{{ intro_h3 }}</h3>
+            <p>{{ intro_p_2 }}</p>
+            <p>{{ intro_p_3 }}</p>
           </div>
-          <div class="content_container">content</div>
+          <div class="content_container"></div>
         </div>
       </el-main>
     </el-container>
@@ -56,34 +61,40 @@ import { UserFilled } from '@element-plus/icons'
 
 export default {
   components: {
-    // 全名
     [UserFilled.name]: UserFilled
-    // 或者以缩写的方式
   },
   data () {
     return {
       carouselList: [
         {
           id: 0,
-          words: 'The test system',
-          imgUrl:
-            'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg'
+          words_1: 'SMARTER',
+          words_2: 'A Smart drive through system using IoT',
+          imgUrl: 'https://nmsl.adamaxiao.workers.dev/001.jpg?raw'
         },
         {
           id: 1,
-          words: 'The main page',
-          imgUrl:
-            'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg'
+          words_1: 'SAFER',
+          words_2: 'Dedicated waiting area for student safety',
+          imgUrl: 'https://nmsl.adamaxiao.workers.dev/002.jpg?raw'
         },
         {
           id: 2,
-          words: 'Production introduction',
+          words_1: 'FASTER',
+          words_2: 'Speeding up the pick-up process by announcement',
           imgUrl:
-            'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg'
+            'https://nmsl.adamaxiao.workers.dev/003.jpg?raw'
         }
       ],
-      intro_h2: 'A smart traffic solution for schools',
-      intro_h3: 'DriveThru is a Smart drive through system using IoT'
+
+      intro_h2: 'DriveThru is a smart Drive Through system using IoT',
+      intro_p_1:
+        'In order to speed up the speed of picking up students and optimizing the picking up process, the drive-through idea was used in the design of the project.',
+      intro_h3: 'A smart traffic solution for schools',
+      intro_p_2:
+        "Without requiring parents to get off the car to pick up students, the car plate number together with the student's name will be announced through the speaker to inform students.",
+      intro_p_3:
+        'With image processing algorithm and text-to-speech technology, the system will automatically recognize the license plate and notify the waiting students in the background .'
     }
   },
   methods: {
@@ -98,6 +109,8 @@ export default {
 .home_container {
   width: 100%;
   height: 100%;
+  position: fixed;
+  display: flex;
 }
 .el-header {
   height: 8%;
@@ -121,20 +134,20 @@ export default {
 }
 
 .el-main {
+  width: 100%;
+  height: 100%;
   background-color: azure;
+  position: fixed;
+  display: flex;
 }
 
 .page_container {
-  width: 1500px;
+  width: 100%;
   height: 100%;
-  position: relative;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .carousel_container {
-  width: 90%;
+  width: 100%;
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -144,17 +157,27 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   .carousel_image {
     width: 100%;
+    justify-content: center;
+    filter: blur(0px);
   }
-  h3 {
+  .carousel_words {
     position: absolute;
-    color: #fff;
-    font-size: 20px;
-    opacity: 0.9;
-    padding-right: 70%;
-    padding-top: 10%;
+    padding-left: 100px;
+    padding-top: 100px;
+    > h2 {
+      color: cornsilk;
+      font-size: 60px;
+      font-weight: 200;
+      line-height:5px;
+      opacity: 0.9;
+    }
+    > h4 {
+      color: cornsilk;
+      font-size: 15px;
+      opacity: 0.9;
+    }
   }
 }
 
@@ -167,36 +190,37 @@ export default {
 }
 
 .intro_container {
-  width: 100%;
-  height: 400px;
+  width: 700px;
+  height: 600px;
   position: relative;
   left: 50%;
   transform: translate(-50%);
   > h1 {
-    font-size: 35px;
-    opacity: 0.85;
+    font-size: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   > h2 {
+    opacity: 0.85;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   > h3 {
+    opacity: 0.85;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-}
-
-.content_container {
-  width: 90%;
-  height: 400px;
-  position: relative;
-  left: 50%;
-  transform: translate(-50%);
-  background-color: #d3dce6;
+  > p {
+    font-size: 20px;
+    font-weight: 100;
+    opacity: 0.7;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

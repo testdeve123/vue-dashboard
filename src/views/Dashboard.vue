@@ -1,8 +1,8 @@
 <template>
   <div class="chart_container">
     <div class="classAna_container">
-      <div class="classAna_chart" id="classAna"></div>
       <div class="date_select_container">
+        <span> {{ titleOfChart_1 }} &nbsp;</span>
         <span class="date_select"></span>
         <el-date-picker
           v-model="dateValue"
@@ -15,6 +15,7 @@
         >
         </el-date-picker>
       </div>
+      <div class="classAna_chart" id="classAna"></div>
     </div>
     <div class="numofCar_chart_container">
       <div class="numofCar_chart" id="numofCar"></div>
@@ -27,15 +28,16 @@ export default {
   name: 'index',
   data () {
     return {
+      titleOfChart_1: "Number of Vehicle of each year's student on ",
       numberInfoForm: [
-        { date: '2022-03-15', number: [10, 20, 30, 50, 10, 5] },
-        { date: '2022-03-14', number: [15, 25, 30, 10, 5, 5] },
-        { date: '2022-03-13', number: [30, 20, 10, 40, 10, 5] },
-        { date: '2022-03-12', number: [20, 20, 30, 50, 5, 5] },
-        { date: '2022-03-11', number: [50, 5, 30, 10, 10, 5] },
-        { date: '2022-03-10', number: [5, 15, 10, 10, 0, 50] },
-        { date: '2022-03-09', number: [35, 5, 10, 5, 20, 5] },
-        { date: '2022-03-08', number: [25, 15, 5, 20, 10, 5] }
+        { date: '2022-03-25', number: [10, 20, 30, 50, 10, 5] },
+        { date: '2022-03-24', number: [15, 25, 30, 10, 5, 5] },
+        { date: '2022-03-23', number: [30, 20, 10, 40, 10, 5] },
+        { date: '2022-03-22', number: [20, 20, 30, 50, 5, 5] },
+        { date: '2022-03-21', number: [50, 5, 30, 10, 10, 5] },
+        { date: '2022-03-20', number: [5, 15, 10, 10, 0, 50] },
+        { date: '2022-03-19', number: [35, 5, 10, 5, 20, 5] },
+        { date: '2022-03-18', number: [25, 15, 5, 20, 10, 5] }
       ],
       barChartValue: [],
       year: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6'],
@@ -136,6 +138,14 @@ export default {
       document.getElementById('classAna').removeAttribute('_echarts_instance_')
       document.getElementById('numofCar').removeAttribute('_echarts_instance_')
     },
+    dyTrafficFlowChart () {
+      var myChart = this.$echarts.getInstanceByDom(
+        document.getElementById('dyTrFlow')
+      )
+      if (myChart == null) {
+        myChart = this.$echarts.init(document.getElementById('classAna'))
+      }
+    },
     classAnaChart () {
       var myChart = this.$echarts.getInstanceByDom(
         document.getElementById('classAna')
@@ -145,10 +155,7 @@ export default {
       }
 
       var option = {
-        title: {
-          text: "Number of Vehicle of each year's student on",
-          left: 'right'
-        },
+        title: {},
         xAxis: {
           type: 'category',
           data: this.year
@@ -236,7 +243,7 @@ export default {
 <style lang="less" scoped>
 .chart_container {
   width: 1500px;
-  height: 85%;
+  height: 100%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -244,23 +251,29 @@ export default {
 }
 
 .classAna_container {
-  width: 80%;
+  width: 50%;
   height: 350px;
   background-color: aliceblue;
   position: relative;
   left: 50%;
   top: 25%;
   transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: space-between;
-  .classAna_chart {
-    width: 85%;
-    height: 90%;
-    padding: 4% 4%;
-  }
   .date_select_container {
-    padding-top: 4%;
-    padding-right: 4%;
+    width: 100%;
+    padding-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > span {
+      font-size: 20px;
+    }
+  }
+  .classAna_chart {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
