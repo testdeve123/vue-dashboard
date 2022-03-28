@@ -8,8 +8,19 @@
             <map-location style="width: 50px; height: 50px" />
           </el-icon>
           <div class="notification_location_data">
+            <i> {{ location }}</i>
+            <h4>System Location</h4>
+          </div>
+        </div>
+      </div>
+      <div class="notification_position">
+        <div class="notification_position_upper">
+          <el-icon style="font-size: 100px">
+            <school style="width: 50px; height: 50px" />
+          </el-icon>
+          <div class="notification_position_data">
             <i> {{ position }}</i>
-            <h4>{{ location }}</h4>
+            <h4>Camera Position</h4>
           </div>
         </div>
       </div>
@@ -36,11 +47,14 @@
         </div>
         <el-popover placement="bottom-start" :width="400" trigger="click">
           <template #reference>
-            <el-button type="text" style="float: right; padding-right: 2%"
+            <el-button
+              type="text"
+              style="float: right; padding-right: 2%"
+              @click="handleViewDetails"
               ><el-icon> <caret-right /> </el-icon>View Details</el-button
             >
           </template>
-          <el-table :data="gridData">
+          <el-table v-loading="loading_1" :data="gridData">
             <el-table-column
               width="150"
               property="date"
@@ -60,9 +74,11 @@
         </el-popover>
       </div>
     </div>
+    <el-divider></el-divider>
     <div class="record_table_container">
       <div class="record_table">
         <el-table
+          v-loading="loading_2"
           :data="tableData"
           border
           highlight-current-row
@@ -97,25 +113,32 @@
           </el-pagination>
         </div>
       </div>
+      <el-divider direction="vertical"></el-divider>
       <div class="picture_container">
         <el-image :src="src" class="image-box">
           <template #placeholder>
             <div class="image-slot">Loading <span class="dot">...</span></div>
           </template>
         </el-image>
-        <div class="picture_container_placeholder"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Camera, CaretRight, MapLocation, Warning } from '@element-plus/icons'
+import {
+  Camera,
+  CaretRight,
+  MapLocation,
+  School,
+  Warning
+} from '@element-plus/icons'
 import { formatDate } from '@/assets/js/util'
 
 export default {
   components: {
     [MapLocation.name]: MapLocation,
+    [School.name]: School,
     [Camera.name]: Camera,
     [Warning.name]: Warning,
     [CaretRight.name]: CaretRight
@@ -125,17 +148,19 @@ export default {
       empty: {},
       dialogVisible: false,
       position: 'Main Gate',
-      location: 'Kwang Hwa School',
+      location: 'KwangHwa School',
       CountOfHistory: '',
       CountOfUnHistory: '',
       gridData: [
         {
-          date: '2016-05-02',
-          time: '13:02:30',
-          carplate: 'NNW1234'
+          date: '',
+          time: '',
+          carplate: ''
         }
       ],
+      loading_1: true,
       tableData: [],
+      loading_2: true,
       currentRow: null,
       src: '',
       currentPage: 1,
@@ -148,8 +173,8 @@ export default {
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
 
+    this.getUnHistoryDataCount()
     this.getHistoryData()
-    this.getUnHistoryData()
   },
   methods: {
     formatTime (time) {
@@ -180,7 +205,16 @@ export default {
         this.tableData.push(insertItem)
         console.log(insertItem)
       }
-      this.loading = false
+      this.loading_2 = false
+    },
+    async getUnHistoryDataCount () {
+      const { data: res } = await this.$api.post('getUnDataHistory', this.empty)
+      console.log(res.list)
+      this.CountOfUnHistory = res.total
+    },
+    handleViewDetails () {
+      this.loading_1 = true
+      this.getUnHistoryData()
     },
     async getUnHistoryData () {
       const { data: res } = await this.$api.post('getUnDataHistory', this.empty)
@@ -195,7 +229,7 @@ export default {
         this.gridData.push(insertItem)
         console.log(insertItem)
       }
-      this.loading = false
+      this.loading_1 = false
     },
     deleteRow (index, rows) {
       console.log(index, rows)
@@ -249,8 +283,30 @@ export default {
     margin-left: 5%;
     margin-right: 5%;
     border-radius: 10px;
-    border: solid 1px aqua;
+    border: solid 1px darkgray;
     .notification_location_upper {
+      height: 75%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      background-color: darkgray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      justify-content: space-between;
+      .notification_location_data {
+        padding-right: 10%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .notification_position {
+    width: 18%;
+    height: 100%;
+    margin-right: 5%;
+    border-radius: 10px;
+    border: solid 1px aqua;
+    .notification_position_upper {
       height: 75%;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
@@ -259,7 +315,7 @@ export default {
       align-items: center;
       justify-content: center;
       justify-content: space-between;
-      .notification_detection_data {
+      .notification_position_data {
         padding-right: 10%;
         align-items: center;
         justify-content: center;
@@ -269,7 +325,6 @@ export default {
   .notification_detection {
     width: 18%;
     height: 100%;
-    margin-left: 5%;
     margin-right: 5%;
     border-radius: 10px;
     border: solid 1px #39c5bb;
@@ -292,7 +347,6 @@ export default {
   .notification_alerts {
     width: 18%;
     height: 100%;
-    margin-left: 5%;
     margin-right: 5%;
     border-radius: 10px;
     border: solid 1px crimson;
@@ -316,31 +370,26 @@ export default {
 
 .record_table_container {
   width: 100%;
-  height: 80%;
-  position: relative;
+  height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
   .record_table {
     width: 100%;
-    height: 90%;
+    height: 100%;
     .pagination_container {
       padding-top: 3%;
     }
   }
   .picture_container {
     width: 100%;
-    height: 80%;
+    height: 100%;
     .image-box {
       height: 480px;
       background-color: aliceblue;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .picture_container_placeholder {
-      width: 100%;
-      height: 20%;
     }
   }
 }

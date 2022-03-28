@@ -12,26 +12,94 @@
         <div class="percentage_chart_date"></div>
       </div>
     </div>
-    <div class="status_container">
-      <div class="device_status">
-        <el-card class="box-card" shadow="hover">
-          <div v-for="item in cardInfo" :key="item" class="text item">
-            {{ item }}
-          </div>
-        </el-card>
+    <div v-loading="loading" class="status_container">
+      <div class="status_refresh">
+        <el-icon class="status_refresh_icon">
+          <refresh-right @click="handleRefreshStatus" />
+        </el-icon>
       </div>
-      <div class="Network_status"></div>
+      <div class="status_card">
+        <div class="system_status">
+          <el-card class="system_status_box-card" shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <span>System Status</span>
+              </div>
+            </template>
+            <div
+              v-for="item in systemStatus_cardInfo"
+              :key="item"
+              class="text item"
+            >
+              {{ item }}
+            </div>
+          </el-card>
+        </div>
+        <el-divider direction="vertical"></el-divider>
+        <div class="general_status">
+          <el-card class="general_status_box-card" shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <span>General Info</span>
+              </div>
+            </template>
+            <div
+              v-for="item in generalStatus_cardInfo"
+              :key="item"
+              class="text item"
+            >
+              {{ item }}
+            </div>
+          </el-card>
+        </div>
+        <el-divider direction="vertical"></el-divider>
+        <div class="service_status">
+          <el-card class="service_status_box-card" shadow="hover">
+            <template #header>
+              <div class="card-header">
+                <span>Service Info</span>
+              </div>
+            </template>
+            <div
+              v-for="item in serviceStatus_cardInfo"
+              :key="item"
+              class="text item"
+            >
+              {{ item }}
+            </div>
+          </el-card>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { RefreshRight } from '@element-plus/icons'
 export default {
+  components: {
+    [RefreshRight.name]: RefreshRight
+  },
   data () {
     return {
       numOfDetected: '169',
       dateOfDetected: '2022-2-24',
-      cardInfo: ['System Status:  service is running', 'ip address: 192.168.1.1', 'Mac address: BD:3D:45:ES:35']
+      loading: false,
+      systemStatus_cardInfo: [
+        'System Status:   running',
+        'Detection Service Status:  running',
+        'Data Processing Service Status: running'
+      ],
+      generalStatus_cardInfo: [
+        'Network Status:  Connection Established',
+        'IP address: 192.168.1.1',
+        'Mac address: BD:3D:45:ES:35'
+      ],
+      serviceStatus_cardInfo: [
+        'Camera running Time: 0D,2H',
+        'ip address: 192.168.1.1',
+        'Mac address: BD:3D:45:ES:35'
+      ]
     }
   },
   created () {
@@ -98,6 +166,9 @@ export default {
       }
 
       myChart.setOption(option)
+    },
+    handleRefreshStatus () {
+      this.loading = true
     }
   }
 }
@@ -116,11 +187,11 @@ export default {
 .chart_container_upper {
   width: 80%;
   height: 400px;
-  position: relative;
-  left: 50%;
-  top: 30%;
-  transform: translate(-50%, -50%);
+  margin-left: 10%;
+  margin-right: 10%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   justify-content: space-between;
 }
 
@@ -172,15 +243,43 @@ export default {
 
 .status_container {
   width: 80%;
-  height: 350px;
+  height: 400px;
+  margin-left: 10%;
+  margin-right: 10%;
   position: relative;
-  left: 50%;
-  top: 25%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: antiquewhite;
+  .status_refresh {
+    height: 30px;
+    display: flex;
+    align-items: center;
+
+    .status_refresh_icon {
+      font-size: 25px;
+      padding-left: 10px;
+      padding-top: 10px;
+    }
+  }
+  .status_card {
+    height: 370px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .system_status {
+      width: 25%;
+      padding-left: 5%;
+      padding-right: 2%;
+    }
+    .general_status {
+      width: 25%;
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+    .service_status {
+      width: 25%;
+      padding-left: 2%;
+      padding-right: 5%;
+    }
+  }
 }
 
 .text {
@@ -189,9 +288,5 @@ export default {
 
 .item {
   padding: 18px 0;
-}
-
-.box-card {
-  width: 480px;
 }
 </style>

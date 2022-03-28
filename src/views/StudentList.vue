@@ -1,8 +1,13 @@
 <template>
   <div class="table_container">
     <div class="search_table">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="">
+      <el-form
+        :inline="true"
+        :rules="rule"
+        :model="formInline"
+        class="demo-form-inline"
+      >
+        <el-form-item label="" prop="name">
           <el-input
             v-model="formInline.search"
             placeholder="Student Search"
@@ -70,21 +75,47 @@
               v-model="dialogFormVisible"
               :append-to-body="true"
             >
-              <el-form :model="editForm">
-                <el-form-item label="活动名称" :label-width="formLabelWidth">
-                  <el-input
-                    v-model="editForm.name"
-                    autocomplete="off"
-                  ></el-input>
+              <el-form :rules="rules" :model="editForm">
+                <el-form-item label="Student ID" prop="id">
+                  <el-input v-model="editForm.id"></el-input>
                 </el-form-item>
-                <el-form-item label="活动区域" :label-width="formLabelWidth">
-                  <el-select
-                    v-model="editForm.gender"
-                    placeholder="请选择活动区域"
+                <el-form-item label="Student Name" prop="name">
+                  <el-input v-model="editForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="Student Gender" prop="gender">
+                  <el-radio v-model="editForm.gender" label="0"
+                    >Female</el-radio
                   >
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                  </el-select>
+                  <el-radio v-model="editForm.gender" label="1">Male</el-radio>
+                </el-form-item>
+                <el-form-item label="Student Class" prop="">
+                  <el-form-item label="" prop="year">
+                    <el-select v-model="editForm.year" placeholder="Year">
+                      <el-option
+                        v-for="item in yearList"
+                        :label="item"
+                        :value="item"
+                        :key="item"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="" prop="group">
+                    <el-select
+                      v-model="editForm.group"
+                      placeholder="Group"
+                      prop="group"
+                    >
+                      <el-option
+                        v-for="item in groupList"
+                        :label="item"
+                        :value="item"
+                        :key="item"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-form-item>
+                <el-form-item label="Carplate Number" prop="carplate">
+                  <el-input v-model="editForm.carplate"></el-input>
                 </el-form-item>
               </el-form>
               <template v-slot:footer>
@@ -133,25 +164,128 @@
 </template>
 
 <script>
+// check input ID, must be number type
+const isNum = (rule, value, callback) => {
+  const age = /^[0-9]*$/
+  if (!age.test(value)) {
+    callback(new Error(''))
+  } else {
+    callback()
+  }
+}
+
 export default {
   inject: ['reload'],
   data () {
     return {
       loading: true,
       tableData: [],
+      yearList: ['1', '2', '3', '4', '5', '6'],
+      groupList: [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z'
+      ],
       editForm: [
         {
           id: '',
-          stu_name: '',
+          name: '',
           gender: '',
           year: '',
           group: '',
-          carplate_num: ''
+          carplate: ''
         }
       ],
       formInline: {
         search: '',
         type: ''
+      },
+      rules: {
+        id: [
+          {
+            required: true,
+            message: "Please enter the student's ID",
+            trigger: 'blur'
+          },
+          {
+            validator: isNum,
+            message: "The student's ID must be number",
+            trigger: 'blur'
+          },
+          {
+            max: 6,
+            message: "The student's ID cannot be longer than 6 characters",
+            trigger: 'blur'
+          }
+        ],
+        name: [
+          {
+            required: true,
+            message: "Please enter student's name",
+            trigger: 'blur'
+          },
+          {
+            max: 30,
+            message: "The student's name cannot be longer than 30 characters",
+            trigger: 'blur'
+          }
+        ],
+        gender: [
+          {
+            required: true,
+            message: "Please select student's gender",
+            trigger: 'change'
+          }
+        ],
+        year: [
+          {
+            required: true,
+            message: 'Please enter year of study',
+            trigger: 'change'
+          }
+        ],
+        group: [
+          {
+            required: true,
+            message: 'Please enter group of study',
+            trigger: 'change'
+          }
+        ],
+        carplate: [
+          {
+            required: true,
+            message: 'Please enter car plate number',
+            trigger: 'blur'
+          },
+          {
+            max: 10,
+            message: 'Car Plate cannot be longer than 10 characters',
+            trigger: 'blur'
+          }
+        ]
       },
       empty: {}, // for request data
       one: {}, // for timer, auto reload
@@ -220,10 +354,11 @@ export default {
     // edit
     handleEdit (index, row) {
       this.editForm.id = row.id
-      this.editForm.stu_name = row.stu_name
-      this.editForm.class = row.class
+      this.editForm.name = row.stu_name
+      this.editForm.year = row.year
+      this.editForm.group = row.group
       this.editForm.gender = row.gender
-      this.editForm.carplate_num = row.carplateNum
+      this.editForm.carplate = row.carplate_num
     },
     async confirmEdit () {
       const editItem = {
