@@ -7,7 +7,7 @@ COPY ./ /work
 RUN npm install
   
 
-RUN npm build
+RUN npm run build
 
 FROM nginx:1.19.6-alpine
 
