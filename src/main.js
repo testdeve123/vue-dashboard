@@ -7,7 +7,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css' // import './plugins/element.js'
 import * as echarts from 'echarts' // import 'echarts'
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:8888/api/'
+axios.defaults.baseURL = 'http://drivethru.top:8888/api/'
 
 const app = createApp(App)
 app.use(router).use(ElementPlus).mount('#app') //
