@@ -16,12 +16,19 @@
         <!-- username -->
         <el-form-item>
           <span>Username</span>
-          <el-input v-model="loginForm.username" placeholder="Username"></el-input>
+          <el-input
+            v-model="loginForm.username"
+            placeholder="Username"
+          ></el-input>
         </el-form-item>
         <!-- password -->
         <el-form-item>
           <span>Password</span>
-          <el-input v-model="loginForm.password" type="password" placeholder="password"></el-input>
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            placeholder="password"
+          ></el-input>
         </el-form-item>
         <!-- button -->
         <div class="buttons">
@@ -40,12 +47,12 @@ export default {
   data () {
     var validateusername = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入用户名'))
+        callback(new Error('please enter username'))
       }
     }
     var validatepassword = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'))
+        callback(new Error('please enter password'))
       }
     }
     return {
@@ -61,7 +68,9 @@ export default {
   },
   methods: {
     toLogin () {
-      this.$router.push('/home')
+      if (this.loginForm.username === 'admin' && this.loginForm.password === 'admin') {
+        this.$router.push('/home')
+      }
     },
     toRegister () {
       this.$router.push('/register')
