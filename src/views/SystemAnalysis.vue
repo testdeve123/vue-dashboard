@@ -86,19 +86,18 @@ export default {
       dateOfDetected: '2022-2-24',
       loading: false,
       systemStatus_cardInfo: [
-        'System Status:   running',
-        'Detection Service Status:  running',
-        'Data Processing Service Status: running'
+        'System Status: Stopped',
+        'Detection Service Status:  Stopped',
+        'Data Processing Service Status: Stopped'
       ],
       generalStatus_cardInfo: [
-        'Network Status:  Connection Established',
-        'IP address: 192.168.1.1',
+        'Network Status:  Connection not Established',
+        'IP address: 0.0.0.0',
         'Mac address: BD:3D:45:ES:35'
       ],
       serviceStatus_cardInfo: [
-        'Camera running Time: 0D,2H',
-        'ip address: 192.168.1.1',
-        'Mac address: BD:3D:45:ES:35'
+        'Camera Running Time: 0D,0H',
+        'Websit Running Time: 1D,5H'
       ]
     }
   },
