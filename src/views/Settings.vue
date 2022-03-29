@@ -1,6 +1,14 @@
 <template>
   <div class="table_container">
-
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+    </el-select>
   </div>
 </template>
 
@@ -8,6 +16,7 @@
 export default {
   data () {
     return {
+      value: '',
       formInline: {
         user: '',
         region: ''
@@ -30,12 +39,8 @@ export default {
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

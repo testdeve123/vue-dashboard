@@ -1,23 +1,43 @@
 <template>
   <div class="chart_container">
-    <div class="classAna_container">
-      <div class="date_select_container">
-        <span> {{ titleOfChart_1 }} &nbsp;</span>
-        <span class="date_select"></span>
-        <el-date-picker
-          v-model="dateValue"
-          type="date"
-          placeholder="Date Select"
-          value-format="YYYY-MM-DD"
-          :disabled-date="disabledDate"
-          :shortcuts="shortcuts"
-          @change="(value) => dateChangeHandler(value)"
-        >
-        </el-date-picker>
+    <div class="chart_container_upper">
+      <div class="classAna_container">
+        <div class="date_select_container">
+          <span> {{ titleOfChart_1 }} &nbsp;</span>
+          <span class="date_select"></span>
+          <el-date-picker
+            v-model="dateValue"
+            type="date"
+            placeholder="Date Select"
+            value-format="YYYY-MM-DD"
+            :disabled-date="disabledDate"
+            :shortcuts="shortcuts"
+            @change="(value) => dateChangeHandler(value)"
+            style="width: 150px"
+          >
+          </el-date-picker>
+        </div>
+        <div class="classAna_chart" id="classAna"></div>
       </div>
-      <div class="classAna_chart" id="classAna"></div>
     </div>
     <div class="numofCar_chart_container">
+      <div class="week_select_container">
+        <span> {{ titleOfChart_2 }} &nbsp;</span>
+        <span class="week_select"></span>
+        <el-select
+          v-model="weekValue"
+          placeholder=""
+          @change="(value) => weekChangeHandler(value)"
+        >
+          <el-option
+            v-for="item in weekOptions"
+            :key="item.value"
+            :value="item.value"
+            :label="item.label"
+          >
+          </el-option>
+        </el-select>
+      </div>
       <div class="numofCar_chart" id="numofCar"></div>
     </div>
   </div>
@@ -28,16 +48,29 @@ export default {
   name: 'index',
   data () {
     return {
-      titleOfChart_1: "Number of Vehicle of each year's student on ",
+      titleOfChart_1: "Number of Vehicle detected of each year's student on ",
+      titleOfChart_2: 'Number of Vehicle detected within a week during ',
       numberInfoForm: [
-        { date: '2022-03-25', number: [10, 20, 30, 50, 10, 5] },
-        { date: '2022-03-24', number: [15, 25, 30, 10, 5, 5] },
-        { date: '2022-03-23', number: [30, 20, 10, 40, 10, 5] },
-        { date: '2022-03-22', number: [20, 20, 30, 50, 5, 5] },
+        { date: '2022-03-13', number: [30, 20, 10, 40, 10, 5] },
+        { date: '2022-03-14', number: [20, 20, 30, 50, 5, 5] },
+        { date: '2022-03-15', number: [50, 5, 30, 10, 10, 5] },
+        { date: '2022-03-16', number: [5, 15, 10, 10, 0, 50] },
+        { date: '2022-03-17', number: [35, 5, 10, 5, 20, 5] },
+        { date: '2022-03-18', number: [25, 15, 5, 20, 10, 5] },
+        { date: '2022-03-19', number: [30, 20, 10, 40, 10, 5] },
+        { date: '2022-03-20', number: [20, 20, 30, 50, 5, 5] },
         { date: '2022-03-21', number: [50, 5, 30, 10, 10, 5] },
-        { date: '2022-03-20', number: [5, 15, 10, 10, 0, 50] },
-        { date: '2022-03-19', number: [35, 5, 10, 5, 20, 5] },
-        { date: '2022-03-18', number: [25, 15, 5, 20, 10, 5] }
+        { date: '2022-03-22', number: [5, 15, 10, 10, 0, 50] },
+        { date: '2022-03-23', number: [35, 5, 10, 5, 20, 5] },
+        { date: '2022-03-24', number: [25, 15, 5, 20, 10, 5] },
+        { date: '2022-03-25', number: [10, 20, 30, 50, 10, 5] },
+        { date: '2022-03-26', number: [15, 25, 30, 10, 5, 5] },
+        { date: '2022-03-27', number: [30, 20, 10, 40, 10, 5] },
+        { date: '2022-03-28', number: [20, 20, 30, 50, 5, 5] },
+        { date: '2022-03-29', number: [50, 5, 30, 10, 10, 5] },
+        { date: '2022-03-30', number: [5, 15, 10, 10, 0, 50] },
+        { date: '2022-03-31', number: [35, 5, 10, 5, 20, 5] },
+        { date: '2022-04-01', number: [25, 15, 5, 20, 10, 5] }
       ],
       barChartValue: [],
       year: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6'],
@@ -63,20 +96,50 @@ export default {
           }
         }
       ],
+      weekValue: '',
+      weekOptions: [],
       //
-      carInfoForm: {
-        numofCarAft: [10, 20, 30, 50, 60, 10, 5],
-        numofCarEve: [5, 10, 40, 20, 50, 0, 5],
-        dateofAWeek: [
-          '2022-02-21',
-          '2022-02-22',
-          '2022-02-23',
-          '2022-02-24',
-          '2022-02-25',
-          '2022-02-26',
-          '2022-02-27'
-        ]
-      },
+      carInfoForm: [
+        {
+          numofCarAft: [10, 20, 30, 50, 60, 10, 5],
+          numofCarEve: [5, 10, 40, 20, 50, 0, 5],
+          dateofAWeek: [
+            '2022-02-21',
+            '2022-02-22',
+            '2022-02-23',
+            '2022-02-24',
+            '2022-02-25',
+            '2022-02-26',
+            '2022-02-27'
+          ]
+        },
+        {
+          numofCarAft: [15, 25, 20, 15, 30, 10, 5],
+          numofCarEve: [50, 20, 30, 30, 10, 5, 0],
+          dateofAWeek: [
+            '2022-02-28',
+            '2022-03-01',
+            '2022-03-02',
+            '2022-03-03',
+            '2022-03-04',
+            '2022-03-05',
+            '2022-03-06'
+          ]
+        },
+        {
+          numofCarAft: [30, 10, 50, 20, 60, 10, 5],
+          numofCarEve: [10, 40, 10, 20, 10, 10, 5],
+          dateofAWeek: [
+            '2022-03-07',
+            '2022-03-08',
+            '2022-03-09',
+            '2022-03-10',
+            '2022-03-11',
+            '2022-03-12',
+            '2022-03-13'
+          ]
+        }
+      ],
       lineChartForm: {
         numofCarAft: [],
         numofCarEve: [],
@@ -100,8 +163,9 @@ export default {
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
 
     this.getDate()
+    this.getWeek()
     this.getDataByDate()
-    this.getdata()
+    this.getDataByWeek()
   },
   mounted () {
     this.cleanEChartsCache()
@@ -124,12 +188,36 @@ export default {
         }
       }
     },
-    getdata () {
-      for (let i = 0; i < 7; i++) {
-        this.lineChartForm.date[i] =
-          this.week[i] + '\n\n' + '(' + this.carInfoForm.dateofAWeek[i] + ')'
-        this.lineChartForm.numofCarAft[i] = this.carInfoForm.numofCarAft[i]
-        this.lineChartForm.numofCarEve[i] = this.carInfoForm.numofCarEve[i]
+    getWeek () {
+      for (var i in this.carInfoForm) {
+        const insertItem = {
+          value: this.carInfoForm[i].dateofAWeek[0],
+          label:
+            this.carInfoForm[i].dateofAWeek[0] +
+            ' - ' +
+            this.carInfoForm[i].dateofAWeek[6]
+        }
+        this.weekOptions.push(insertItem)
+      }
+      var largest = Object.keys(this.carInfoForm).length - 1
+      this.weekValue = this.carInfoForm[largest].dateofAWeek[0]
+    },
+    getDataByWeek () {
+      for (var i in this.carInfoForm) {
+        if (this.carInfoForm[i].dateofAWeek[0] === this.weekValue) {
+          for (var j = 0; j < 7; j++) {
+            this.lineChartForm.date[j] =
+              this.week[j] +
+              '\n\n' +
+              '(' +
+              this.carInfoForm[i].dateofAWeek[j] +
+              ')'
+            this.lineChartForm.numofCarAft[j] =
+              this.carInfoForm[i].numofCarAft[j]
+            this.lineChartForm.numofCarEve[j] =
+              this.carInfoForm[i].numofCarEve[j]
+          }
+        }
       }
     },
     cleanEChartsCache () {
@@ -180,6 +268,13 @@ export default {
       this.getDataByDate()
       this.classAnaChart()
     },
+    // get week from week selector
+    weekChangeHandler (value) {
+      console.log(value)
+      this.weekValue = value
+      this.getDataByWeek()
+      this.numofCarChart()
+    },
     //
     numofCarChart () {
       var lineChartForm = this.lineChartForm
@@ -192,9 +287,7 @@ export default {
       }
       // set the configuration and data of the chart
       var option = {
-        title: {
-          text: 'Number of Vehicle for last week'
-        },
+        title: {},
         tooltip: {},
         legend: {
           data: ['Afternoon Session', 'Evening Session']
@@ -250,14 +343,18 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.classAna_container {
-  width: 50%;
-  height: 350px;
-  background-color: aliceblue;
+.chart_container_upper {
+  width: 80%;
+  height: 400px;
+  margin-left: 10%;
+  margin-right: 10%;
   position: relative;
-  left: 50%;
-  top: 25%;
-  transform: translate(-50%, -50%);
+}
+.classAna_container {
+  width: 60%;
+  height: 350px;
+  position: relative;
+  background-color: aliceblue;
   .date_select_container {
     width: 100%;
     padding-top: 1%;
@@ -280,18 +377,26 @@ export default {
 .numofCar_chart_container {
   width: 80%;
   height: 350px;
-  background-color: aliceblue;
+  margin-left: 10%;
+  margin-right: 10%;
   position: relative;
-  left: 50%;
-  top: 30%;
-  transform: translate(-50%, -50%);
+  background-color: aliceblue;
+  .week_select_container {
+    width: 100%;
+    padding-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > span {
+      font-size: 20px;
+    }
+  }
   .numofCar_chart {
-    width: 90%;
+    width: 100%;
     height: 90%;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

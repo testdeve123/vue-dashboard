@@ -1,11 +1,10 @@
-FROM node:17-alpine AS builder
+FROM node:16-alpine AS builder
 
 WORKDIR /work
 
 COPY ./ /work
 
 RUN npm install
-  
 
 RUN npm run build
 

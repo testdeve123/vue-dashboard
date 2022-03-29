@@ -114,7 +114,7 @@
         </div>
       </div>
       <el-divider direction="vertical"></el-divider>
-      <div class="picture_container">
+      <div v-loading="loading_image" class="picture_container">
         <el-image :src="src" class="image-box">
           <template #placeholder>
             <div class="image-slot">Loading <span class="dot">...</span></div>
@@ -161,8 +161,9 @@ export default {
       loading_1: true,
       tableData: [],
       loading_2: true,
+      loading_image: true,
       currentRow: null,
-      src: '',
+      src: require('../assets/images/avatar.png'),
       currentPage: 1,
       pageSize: [10, 20, 30, 40, 50, 100]
     }
@@ -201,11 +202,12 @@ export default {
           class: res.list[i].detStudentClass,
           picLink: res.list[i].detImageLink
         }
-
+        this.src = res.list[0].detImageLink
         this.tableData.push(insertItem)
         console.log(insertItem)
       }
       this.loading_2 = false
+      this.loading_image = false
     },
     async getUnHistoryDataCount () {
       const { data: res } = await this.$api.post('getUnDataHistory', this.empty)

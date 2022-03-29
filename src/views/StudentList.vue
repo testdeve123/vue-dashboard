@@ -123,7 +123,7 @@
                   <el-button @click="dialogFormVisible = false"
                     >Cancel</el-button
                   >
-                  <el-button type="primary" @click="dialogFormVisible = false"
+                  <el-button type="primary" @click="confirmEdit(), (dialogFormVisible = false)"
                     >Confirm</el-button
                   >
                 </div>
@@ -211,6 +211,7 @@ export default {
       ],
       editForm: [
         {
+          index: '',
           id: '',
           name: '',
           gender: '',
@@ -315,11 +316,13 @@ export default {
           gender = 'Male'
         }
         const insertItem = {
+          index: res.list[i].stuIndex,
           id: res.list[i].studentId,
           stu_name: res.list[i].studentName,
           year: res.list[i].studyYear,
           group: res.list[i].studyGroup,
           class: res.list[i].studyYear + res.list[i].studyGroup,
+          isMale: res.list[i].isMale,
           gender: gender,
           carplate_num: res.list[i].carPlateNum
         }
@@ -353,18 +356,25 @@ export default {
     },
     // edit
     handleEdit (index, row) {
+      this.editForm.index = row.index
       this.editForm.id = row.id
       this.editForm.name = row.stu_name
       this.editForm.year = row.year
       this.editForm.group = row.group
-      this.editForm.gender = row.gender
+      this.editForm.gender = row.isMale
       this.editForm.carplate = row.carplate_num
     },
     async confirmEdit () {
       const editItem = {
-        indexNum: '1'
+        stuIndex: this.editForm.index,
+        studentId: this.editForm.id,
+        studentName: this.editForm.name,
+        studyYear: this.editForm.year,
+        studyGroup: this.editForm.group,
+        isMale: this.editForm.gender,
+        carPlateNum: this.editForm.carplate
       }
-      const result = await this.$api.post('deleteCarPlate', editItem)
+      const result = await this.$api.post('editCarPlate', editItem)
       console.log(result)
       this.getAllData()
       this.$router.go(0)
