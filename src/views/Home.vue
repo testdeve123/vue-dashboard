@@ -15,18 +15,18 @@
           @select="handleSelect"
         >
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
-          <el-menu-item index="/datahistory">Data History</el-menu-item>
+          <el-menu-item index="/dataanalysis">Data Analysis</el-menu-item>
           <el-menu-item index="/studentlist">Student Management</el-menu-item>
           <el-menu-item index="/systemanalysis">System Analysis</el-menu-item>
-          <el-menu-item index="/settings">Settings</el-menu-item>
+          <el-menu-item index="/settings" disabled>&nbsp;&nbsp;&nbsp;</el-menu-item>
         </el-menu>
       </div>
       <el-dropdown>
         <el-avatar :size="50" :src="circleUrl"></el-avatar>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="dropdown_event_1"
-              >Settings</el-dropdown-item
+            <el-dropdown-item disabled
+               ></el-dropdown-item
             >
             <el-dropdown-item divided @click="dropdown_event_2"
               >Log Out</el-dropdown-item

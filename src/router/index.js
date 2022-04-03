@@ -3,7 +3,7 @@ import IntroPage from '../views/IntroPage.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
-import DataHistory from '../views/DataHistory.vue'
+import DataAnalysis from '../views/DataAnalysis.vue'
 import StudentList from '../views/StudentList.vue'
 import AddStudent from '../views/AddStudent.vue'
 import SystemAnalysis from '../views/SystemAnalysis.vue'
@@ -31,7 +31,7 @@ const routes = [
     redirect: '/dashboard',
     children: [
       { path: '/dashboard', component: Dashboard },
-      { path: '/datahistory', component: DataHistory },
+      { path: '/dataanalysis', component: DataAnalysis },
       { path: '/studentlist', component: StudentList },
       { path: '/systemanalysis', component: SystemAnalysis },
       { path: '/settings', component: Settings }

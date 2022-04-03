@@ -101,6 +101,7 @@
           </el-table-column>
         </el-table>
         <div class="pagination_container">
+          <template>
           <span class="demonstration"></span>
           <el-pagination
             @size-change="handlePageSizeChange"
@@ -111,6 +112,7 @@
             :total="1000"
           >
           </el-pagination>
+          </template>
         </div>
       </div>
       <el-divider direction="vertical"></el-divider>
@@ -170,7 +172,7 @@ export default {
   },
   filters: {},
   created () {
-    const currentIndex = '/datahistory'
+    const currentIndex = '/dataanalysis'
     this.$emit('getIndex', currentIndex)
     localStorage.setItem('activeIndex', JSON.stringify(currentIndex))
 

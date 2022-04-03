@@ -2,10 +2,12 @@
   <div class="chart_container">
     <div class="chart_container_upper">
       <div class="statistics_container">
-        <div class="statistics_palceholder"></div>
+        <div class="statistics_banner">
+          <span>Average Confidence on &nbsp;</span>
+          <div class="statistics_date">{{ dateOfDetected }}</div>
+          <span>&nbsp; is</span>
+        </div>
         <div class="statistics" id="">{{ numOfDetected }}</div>
-        <div class="statistics_banner"><span>were detected on</span></div>
-        <div class="statistics_date">{{ dateOfDetected }}{{}}</div>
       </div>
       <div class="percentage_chart_container">
         <div class="percentage_chart" id="percentage"></div>
@@ -23,7 +25,7 @@
           <el-card class="system_status_box-card" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span>System Status</span>
+                <span>Subsystem Status</span>
               </div>
             </template>
             <div
@@ -36,15 +38,15 @@
           </el-card>
         </div>
         <el-divider direction="vertical"></el-divider>
-        <div class="general_status">
-          <el-card class="general_status_box-card" shadow="hover">
+        <div class="detection_status">
+          <el-card class="detection_status_box-card" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span>General Info</span>
+                <span>Detection Service Info</span>
               </div>
             </template>
             <div
-              v-for="item in generalStatus_cardInfo"
+              v-for="item in detectionStatus_cardInfo"
               :key="item"
               class="text item"
             >
@@ -53,15 +55,15 @@
           </el-card>
         </div>
         <el-divider direction="vertical"></el-divider>
-        <div class="service_status">
-          <el-card class="service_status_box-card" shadow="hover">
+        <div class="processing_status">
+          <el-card class="processing_status_box-card" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span>Service Info</span>
+                <span>Data Processing Service Info</span>
               </div>
             </template>
             <div
-              v-for="item in serviceStatus_cardInfo"
+              v-for="item in processingStatus_cardInfo"
               :key="item"
               class="text item"
             >
@@ -86,19 +88,15 @@ export default {
       dateOfDetected: '2022-2-24',
       loading: false,
       systemStatus_cardInfo: [
-        'System Status: Stopped',
         'Detection Service Status:  Stopped',
         'Data Processing Service Status: Stopped'
       ],
-      generalStatus_cardInfo: [
+      detectionStatus_cardInfo: [
         'Network Status:  Connection not Established',
         'IP address: 0.0.0.0',
         'Mac address: BD:3D:45:ES:35'
       ],
-      serviceStatus_cardInfo: [
-        'Camera Running Time: 0D,0H',
-        'Websit Running Time: 1D,5H'
-      ]
+      processingStatus_cardInfo: []
     }
   },
   created () {
@@ -215,7 +213,6 @@ export default {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 50px;
-    padding-left: 55%;
     .span {
       font-size: 16px;
       line-height: 20px;
@@ -268,12 +265,12 @@ export default {
       padding-left: 5%;
       padding-right: 2%;
     }
-    .general_status {
+    .detection_status {
       width: 25%;
       padding-left: 2%;
       padding-right: 2%;
     }
-    .service_status {
+    .processing_status {
       width: 25%;
       padding-left: 2%;
       padding-right: 5%;

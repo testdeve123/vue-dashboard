@@ -1,36 +1,45 @@
 <template>
   <div class="table_container">
-    <div class="search_table">
-      <el-form
-        :inline="true"
-        :rules="rule"
-        :model="formInline"
-        class="demo-form-inline"
-      >
-        <el-form-item label="" prop="name">
-          <el-input
-            v-model="formInline.search"
-            placeholder="Student Search"
-          ></el-input>
-        </el-form-item>
-        <el-form-item class="search_select" label="">
-          <el-select v-model="formInline.type" placeholder="Type">
-            <el-option label="Student ID" value="id"></el-option>
-            <el-option label="Student's Name" value="stu_name"></el-option>
-            <el-option label="Student's Class" value="class"></el-option>
-            <el-option label="" value="" disabled></el-option>
-            <el-option label="CarPlate Number" value="carplate_num"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSearchSubmit(formInline.search, formInline.type)"
-            >Search</el-button
+    <div class="upper_area">
+      <div class="search_table">
+        <template>
+          <el-form
+            :inline="true"
+            :rules="rule"
+            :model="formInline"
+            class="demo-form-inline"
           >
-        </el-form-item>
-      </el-form>
-      <el-button type="primary" @click="toAdd()">Add Information</el-button>
+            <el-form-item label="" prop="name">
+              <el-input
+                v-model="formInline.search"
+                placeholder="Student Search"
+              ></el-input>
+            </el-form-item>
+            <el-form-item class="search_select" label="">
+              <el-select v-model="formInline.type" placeholder="Type">
+                <el-option label="Student ID" value="id"></el-option>
+                <el-option label="Student's Name" value="stu_name"></el-option>
+                <el-option label="Student's Class" value="class"></el-option>
+                <el-option label="" value="" disabled></el-option>
+                <el-option
+                  label="CarPlate Number"
+                  value="carplate_num"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="onSearchSubmit(formInline.search, formInline.type)"
+                >Search</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </template>
+      </div>
+      <div class="add_info">
+        <el-button type="primary" @click="toAdd()">Add Information</el-button>
+      </div>
     </div>
     <div class="table_area">
       <el-table
@@ -123,7 +132,9 @@
                   <el-button @click="dialogFormVisible = false"
                     >Cancel</el-button
                   >
-                  <el-button type="primary" @click="confirmEdit(), (dialogFormVisible = false)"
+                  <el-button
+                    type="primary"
+                    @click="confirmEdit(), (dialogFormVisible = false)"
                     >Confirm</el-button
                   >
                 </div>
@@ -310,7 +321,7 @@ export default {
       console.log(res.list)
       var gender = ''
       for (var i = 0; i < res.list.length; i++) {
-        if (res.list[i].isMale === '0') {
+        if (res.list[i].isMale === 0) {
           gender = 'Female'
         } else {
           gender = 'Male'
@@ -407,7 +418,8 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  .search_table {
+  .upper_area {
+    padding-bottom: 1%;
     display: flex;
     justify-content: space-between;
   }
