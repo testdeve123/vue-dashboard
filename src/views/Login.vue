@@ -34,7 +34,6 @@
         <div class="buttons">
           <el-form-item>
             <el-button type="primary" @click="toLogin()">Login</el-button>
-            <el-button type="" @click="toRegister()">Register</el-button>
           </el-form-item>
         </div>
       </el-form>

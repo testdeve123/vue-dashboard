@@ -287,12 +287,12 @@ export default {
     margin-left: 5%;
     margin-right: 5%;
     border-radius: 10px;
-    border: solid 1px darkgray;
+    border: solid 1px cornflowerblue;
     .notification_location_upper {
       height: 75%;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      background-color: darkgray;
+      background-color: cornflowerblue;
       display: flex;
       align-items: center;
       justify-content: center;
