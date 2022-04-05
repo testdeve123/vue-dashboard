@@ -13,28 +13,39 @@
           mode="horizontal"
           :router="true"
           @select="handleSelect"
-          style="width:100%"
+          style="width:700px"
         >
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
           <el-menu-item index="/dataanalysis">Data Analysis</el-menu-item>
           <el-menu-item index="/studentlist">Student Management</el-menu-item>
-          <el-menu-item index="/systemanalysis" disabled>&nbsp;&nbsp;&nbsp;</el-menu-item>
-          <el-menu-item index="/settings" disabled>&nbsp;&nbsp;&nbsp;</el-menu-item>
+          <el-menu-item index="/systemanalysis" disabled
+            >&nbsp;&nbsp;&nbsp;</el-menu-item
+          >
+          <el-menu-item index="/settings" disabled
+            >&nbsp;&nbsp;&nbsp;</el-menu-item
+          >
         </el-menu>
       </div>
-      <el-dropdown>
-        <el-avatar :size="50" :src="circleUrl"></el-avatar>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item disabled
-               ></el-dropdown-item
-            >
-            <el-dropdown-item divided @click="dropdown_event_2"
-              >Log Out</el-dropdown-item
-            >
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <el-button type="info" @click="dropdown_event_2"
+        ><el-icon style="font-size: 20px">
+          <user-filled
+            style="width: 2em; height: 2em; margin-right: 8px"
+          /> </el-icon
+        >Log Out</el-button
+      >
+      <template>
+        <el-dropdown>
+          <el-avatar :size="50" :src="circleUrl"></el-avatar>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item disabled></el-dropdown-item>
+              <el-dropdown-item divided @click="dropdown_event_2"
+                >Log Out</el-dropdown-item
+              >
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </template>
     </el-header>
     <!-- main -->
     <el-container>
@@ -51,7 +62,12 @@
 </template>
 
 <script>
+import { UserFilled } from '@element-plus/icons'
+
 export default {
+  components: {
+    [UserFilled.name]: UserFilled
+  },
   data () {
     return {
       activeIndex: '/dashboard',

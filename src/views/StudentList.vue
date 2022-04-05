@@ -91,11 +91,13 @@
                 <el-form-item label="Student Name" prop="name">
                   <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="Student Gender" prop="gender">
-                  <el-radio v-model="editForm.gender" label="0"
+                <el-form-item label="Student Gender">
+                  <el-radio-group v-model="editForm.gender" prop="gender">
+                  <el-radio label="0"
                     >Female</el-radio
                   >
-                  <el-radio v-model="editForm.gender" label="1">Male</el-radio>
+                  <el-radio label="1">Male</el-radio>
+                  </el-radio-group>
                 </el-form-item>
                 <el-form-item label="Student Class" prop="">
                   <el-form-item label="" prop="year">
@@ -374,6 +376,7 @@ export default {
       this.editForm.group = row.group
       this.editForm.gender = row.isMale
       this.editForm.carplate = row.carplate_num
+      console.log(this.editForm)
     },
     async confirmEdit () {
       const editItem = {
