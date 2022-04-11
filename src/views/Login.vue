@@ -1,5 +1,20 @@
 <template>
   <div class="login_container">
+    <el-header>
+      <div>
+        <img src="../assets/images/logo.png" alt="" />
+        <span>DriveThru System</span>
+      </div>
+      <div>
+        <el-button type="primary" @click="intropageButton"
+          ><el-icon style="font-size: 20px">
+            <Info-filled
+              style="width: 2em; height: 2em; margin-right: 8px"
+            /> </el-icon
+          >Introduction Page</el-button
+        >
+      </div>
+    </el-header>
     <div class="login_des">
       <h1>DriveThru</h1>
       <h2>A smart traffic solution for schools</h2>
@@ -42,7 +57,12 @@
 </template>
 
 <script>
+import { InfoFilled } from '@element-plus/icons'
+
 export default {
+  components: {
+    [InfoFilled.name]: InfoFilled
+  },
   data () {
     var validateusername = (rule, value, callback) => {
       if (value === '') {
@@ -66,8 +86,16 @@ export default {
     }
   },
   methods: {
+    intropageButton () {
+      this.$router.push('/intropage')
+    },
     toLogin () {
-      if (this.loginForm.username === 'admin' && this.loginForm.password === 'admin') {
+      if (
+        this.loginForm.username === 'admin' &&
+        this.loginForm.password === 'admin'
+      ) {
+        const currentLogin = '1145147897'
+        localStorage.setItem('activeLogin', JSON.stringify(currentLogin))
         this.$router.push('/home')
       }
     },
@@ -80,8 +108,29 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
-  background-color: #39c5bb;
+  background-color: azure;
   height: 100%;
+}
+
+.el-header {
+  height: 8%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+  align-items: center;
+  font-size: 20px;
+  > div {
+    display: flex;
+    align-items: center;
+    > img {
+      height: 50%;
+      width: 30%;
+    }
+    > span {
+      margin-left: 15px;
+    }
+  }
 }
 
 .login_des {

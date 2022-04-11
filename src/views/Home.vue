@@ -13,7 +13,7 @@
           mode="horizontal"
           :router="true"
           @select="handleSelect"
-          style="width:700px"
+          style="width: 700px"
         >
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
           <el-menu-item index="/dataanalysis">Data Analysis</el-menu-item>
@@ -81,8 +81,16 @@ export default {
     if (getActiveIndex !== '') {
       this.activeIndex = getActiveIndex
       console.log(this.activeIndex)
+    } else {
+      this.activeIndex = '/dashboard'
     }
     // 在页面刷新时将vuex里的信息保存到localStorage里
+
+    const getActiveLogin = JSON.parse(localStorage.getItem('activeLogin'))
+    console.log(getActiveLogin)
+    if (getActiveLogin === null) {
+      this.$router.push('/login')
+    }
   },
   methods: {
     handleSelect (key, keyPath) {
@@ -96,6 +104,8 @@ export default {
       this.$router.push('/settings')
     },
     dropdown_event_2 () {
+      const currentLogin = null
+      localStorage.setItem('activeLogin', JSON.stringify(currentLogin))
       this.$router.push('/intropage')
     }
   }

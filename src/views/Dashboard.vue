@@ -51,27 +51,27 @@ export default {
       titleOfChart_1: "Number of Vehicle detected of each year's student on ",
       titleOfChart_2: 'Number of Vehicle detected within a week during ',
       numberInfoForm: [
-        { date: '2022-03-28', number: [20, 20, 30, 50, 5, 5] },
-        { date: '2022-03-29', number: [50, 5, 30, 10, 10, 5] },
-        { date: '2022-03-30', number: [5, 15, 10, 10, 0, 50] },
-        { date: '2022-03-31', number: [35, 5, 10, 5, 20, 5] },
-        { date: '2022-04-01', number: [25, 15, 5, 20, 10, 5] },
-        { date: '2022-04-02', number: [30, 20, 10, 40, 10, 5] },
-        { date: '2022-04-03', number: [20, 20, 30, 50, 5, 5] },
-        { date: '2022-04-04', number: [10, 50, 20, 10, 0, 5] },
-        { date: '2022-04-05', number: [50, 5, 30, 10, 10, 5] },
-        { date: '2022-04-06', number: [5, 15, 10, 10, 0, 50] },
-        { date: '2022-04-07', number: [35, 5, 10, 5, 20, 5] },
-        { date: '2022-04-08', number: [25, 15, 5, 20, 10, 5] },
-        { date: '2022-04-09', number: [30, 20, 10, 40, 10, 5] },
-        { date: '2022-04-10', number: [20, 20, 30, 50, 5, 5] },
-        { date: '2022-04-11', number: [50, 5, 30, 10, 10, 5] },
-        { date: '2022-04-12', number: [5, 15, 10, 10, 0, 50] },
-        { date: '2022-04-13', number: [35, 5, 10, 5, 20, 5] },
-        { date: '2022-04-14', number: [25, 15, 5, 20, 10, 5] },
-        { date: '2022-04-15', number: [10, 20, 30, 50, 10, 5] },
-        { date: '2022-04-16', number: [15, 25, 30, 10, 5, 5] },
-        { date: '2022-04-17', number: [30, 20, 10, 40, 10, 5] }
+        { date: '2022-03-28', number: [15, 17, 12, 14, 16, 15] },
+        { date: '2022-03-29', number: [14, 18, 13, 15, 11, 16] },
+        { date: '2022-03-30', number: [17, 15, 14, 16, 10, 17] },
+        { date: '2022-03-31', number: [18, 15, 10, 15, 12, 15] },
+        { date: '2022-04-01', number: [11, 15, 15, 12, 10, 15] },
+        { date: '2022-04-02', number: [16, 20, 10, 10, 15, 18] },
+        { date: '2022-04-03', number: [17, 20, 10, 16, 15, 15] },
+        { date: '2022-04-04', number: [15, 15, 12, 15, 10, 14] },
+        { date: '2022-04-05', number: [15, 15, 13, 10, 10, 15] },
+        { date: '2022-04-06', number: [15, 15, 15, 16, 10, 17] },
+        { date: '2022-04-07', number: [13, 15, 10, 15, 12, 15] },
+        { date: '2022-04-08', number: [15, 15, 15, 12, 10, 16] },
+        { date: '2022-04-09', number: [13, 12, 10, 14, 11, 15] },
+        { date: '2022-04-10', number: [12, 12, 13, 15, 15, 15] },
+        { date: '2022-04-11', number: [15, 15, 13, 10, 10, 16] },
+        { date: '2022-04-12', number: [15, 15, 10, 10, 10, 15] },
+        { date: '2022-04-13', number: [15, 15, 10, 15, 12, 15] },
+        { date: '2022-04-14', number: [12, 16, 15, 20, 11, 15] },
+        { date: '2022-04-15', number: [10, 12, 13, 50, 10, 15] },
+        { date: '2022-04-16', number: [15, 12, 13, 10, 15, 15] },
+        { date: '2022-04-17', number: [13, 12, 10, 14, 10, 15] }
       ],
       barChartValue: [],
       year: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Year 6'],
@@ -102,8 +102,8 @@ export default {
       //
       carInfoForm: [
         {
-          numofCarAft: [10, 20, 30, 50, 60, 10, 5],
-          numofCarEve: [5, 10, 40, 20, 50, 0, 5],
+          numofCarAft: [35, 30, 38, 27, 32, 0, 0],
+          numofCarEve: [45, 50, 40, 46, 48, 0, 0],
           dateofAWeek: [
             '2022-02-21',
             '2022-02-22',
@@ -115,8 +115,8 @@ export default {
           ]
         },
         {
-          numofCarAft: [15, 25, 20, 15, 30, 10, 5],
-          numofCarEve: [50, 20, 30, 30, 10, 5, 0],
+          numofCarAft: [34, 29, 30, 33, 30, 0, 0],
+          numofCarEve: [50, 48, 46, 45, 47, 0, 0],
           dateofAWeek: [
             '2022-02-28',
             '2022-03-01',
@@ -128,8 +128,8 @@ export default {
           ]
         },
         {
-          numofCarAft: [30, 10, 50, 20, 60, 10, 5],
-          numofCarEve: [10, 40, 10, 20, 10, 10, 5],
+          numofCarAft: [30, 29, 32, 33, 31, 0, 0],
+          numofCarEve: [50, 49, 48, 47, 51, 0, 0],
           dateofAWeek: [
             '2022-03-07',
             '2022-03-08',
@@ -350,6 +350,9 @@ export default {
   margin-left: 10%;
   margin-right: 10%;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .classAna_container {
   width: 60%;
