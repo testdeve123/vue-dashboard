@@ -18,12 +18,8 @@
           <el-menu-item index="/dashboard">Dashboard</el-menu-item>
           <el-menu-item index="/dataanalysis">Data Analysis</el-menu-item>
           <el-menu-item index="/studentlist">Student Management</el-menu-item>
-          <el-menu-item index="/systemanalysis" disabled
-            >&nbsp;&nbsp;&nbsp;</el-menu-item
-          >
-          <el-menu-item index="/settings" disabled
-            >&nbsp;&nbsp;&nbsp;</el-menu-item
-          >
+          <el-menu-item index="/systemanalysis">System Analysis</el-menu-item>
+          <el-menu-item index="/settings">Settings</el-menu-item>
         </el-menu>
       </div>
       <el-button type="info" @click="dropdown_event_2"
